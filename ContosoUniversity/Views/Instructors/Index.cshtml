@@ -1,0 +1,154 @@
+﻿@model IEnumerable<ContosoUniversity.DTOs.InstructorDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstMidName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hiredate)
+            </th>
+            <th>
+                Office
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstMidName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hiredate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficeAssignment.Location)
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.ID">Select</a> |
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.Courses != null)
+{
+
+    var listCourses = (IEnumerable<ContosoUniversity.DTOs.CourseDTO>)ViewBag.Courses;
+
+
+    <h3>Courses laught by selected instructor </h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th></th>
+                <th>
+                    Number
+                </th>
+                <th>
+                    Title
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in listCourses)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="index" asp-route-courseID="@item.CourseID">Select</a>
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+@if (ViewBag.Enrollments != null)
+{
+
+    var listEnrollments = (IEnumerable<ContosoUniversity.DTOs.EnrollmentDTO>)ViewBag.Enrollments;
+
+
+    <h3>students Enrolled in Selected Course </h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    Name
+                </th>
+                <th>
+                    Grade
+                </th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in listEnrollments)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.FullName)
+                    </td>
+
+                    @if (item.Grade == null)
+                    {
+                        <td>
+                            No grade
+                        </td>
+
+
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Grade)
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

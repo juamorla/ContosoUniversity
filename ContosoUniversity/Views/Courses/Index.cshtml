@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ContosoUniversity.DTOs.CourseDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Credits)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Credits)
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.CourseID">Select</a> |
+                    <a asp-action="Edit" asp-route-id="@item.CourseID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CourseID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CourseID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.Students != null)
+{
+
+    var listStudents = (IEnumerable<ContosoUniversity.DTOs.StudentDTO>)ViewBag.Students;
+
+
+    <h3>Students EnRrolled in Slected Course </h3>
+
+    <table class="tabble">
+        <tr>
+            <th>Full Name </th>
+        </tr>
+        @foreach (var item in listStudents)
+        {
+            <tr>
+                <td>
+                    @item.LastName  @item.FirstMidName
+                </td>
+            </tr>
+        }
+
+    </table>
+}
